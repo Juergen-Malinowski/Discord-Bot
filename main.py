@@ -1,8 +1,5 @@
 # Hauptprogramm vom Discord-Bot
 
-# Thanks für Icon Discord "TestServerPyBot"
-# <a href="https://www.flaticon.com/de/kostenlose-icons/gruppenchat" title="gruppenchat Icons">Gruppenchat Icons erstellt von Mehwish - Flaticon</a>
-
 # Discord Funktionalitäten importieren ...
 import discord
 
