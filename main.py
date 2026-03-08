@@ -1,5 +1,8 @@
 # Hauptprogramm vom Discord-Bot
 
+# Thanks für Icon Discord "TestServerPyBot"
+# <a href="https://www.flaticon.com/de/kostenlose-icons/gruppenchat" title="gruppenchat Icons">Gruppenchat Icons erstellt von Mehwish - Flaticon</a>
+
 # aus dotenv nun die Funktion "load_dotenv" importieren/loaden ...
 from dotenv import load_dotenv
 # nun op importieren, Windows-Befehlssatz für Dateioperationen
