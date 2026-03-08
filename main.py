@@ -9,5 +9,7 @@ import os
 # zur späteren Nutzung ...
 load_dotenv()  
 
+# den persönlichen KEY aus Datei .env nun in die Variable "secretKey"
+# einlesen und prüfen mit print() ...pi
 secretKey = os.getenv("SECRET_KEY")
 print(secretKey)
