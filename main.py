@@ -56,6 +56,13 @@ async def hallo(ctx):
     # erhält also ein Info, dass er angesprochen wurde bzw. eine Antwort erhielt !!!
     await ctx.send(f"Grüße Dich {ctx.author.mention}")
 
+# /message
+# Schreibt ein User hinter /msg hallo, dann antwortet der Bot:
+# "Deine Nachricht war hallo". Es wird nur das erste Wort zurückgegeben,
+# es sei denn, der User setzt die Nachricht in "".
+@bot.command()
+async def message(ctx, arg):
+    await ctx.send(f"Deine Nachricht war {arg}")
 
 
 # banana
