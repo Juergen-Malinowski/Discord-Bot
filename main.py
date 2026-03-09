@@ -27,6 +27,10 @@ token = os.getenv("DISCORD_TOKEN")
 # Dem Bot die Erlaubnis / Regeln aus Dicord übergeben, die default().
 # Diese habe ich in Discord bei Erstellung des Bots festgelegt, sind also änderbar ...
 intents = discord.Intents.default()
+# Zwei weitere Funktionalitäten für den Bot auch HIER aktivieren ...
+# (Diese müssen bei Dicord-Developer vorher beim Bot aktiviert werden!)
+intents.message_content = True  # Bot kann nun auf Nachrichten reagieren
+intents.members = True          # Bot kann den Members des Dicord-Servers direkt antworten
 
 # Der "prefix", hier definiert als "!" leitet später in Discord einen Befehl an den Bot
 # ein, damit der Bot die Nachricht als Befehl (Funktions-Aufruf) an ihn interpretiert.
@@ -37,10 +41,76 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Ready !!! Ich bin {bot.user}")
 
+# Bot-Event ... Bot soll auf die Nachricht "banana" reagieren ...
+@bot.event
+async def on_message(message):
+    # Verhindert, dass Bot auf eigene Nachrichten reagiert ...
+    if message.author == bot.user:
+        return
+    # Es wir auf "banana" reagiert, egal ob groß oder klein geschrieben ...
+    if "banana" in message.content.lower():
+        # Den Kanal der Nachricht in "channel" speichern
+        channel = message.channel
+        # In den gleichen Kanal nun die Reaktion des Bot ausgeben ...
+        await channel.send(f"Hey, dieser Begriff ist nur für die Schüler der DA !")
+    # Verhindert, dass der Bot nicht nocheinmal auf die gleiche Nachricht reagiert!
+    # Muss ausserhalb der IF-Anweisung stehen!
+    await bot.process_commands(message)
+
 # Den bot starten und mit der Übergabe des token authentifizieren.
 # log_handler aktiviert das Speichern der logs des Bots.
 # log_level definiert, wie die logs gespeichert werden sollen (DEBUG umfangreich)
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
+
+
+
+
+"""
+# Bot soll nun auf Nachrichten reagieren.
+# Immer wenn auf dem Server eine Nachricht geschrieben wurde,
+# wird für den Bot dieses Event ausgelöst.
+# "message" ist ein Objekt und enthält folgende Informationen:
+# Text der Nachricht, Author Nachricht, Kanal der Nachricht und Servername:
+# message.content message.author  message.channel message.guild
+@bot.event
+async def on_message(message):
+    # Die IF-Prüfung wird TRUE, wenn das Wort "/greet" als Nachricht eines
+    # Users auftaucht. NUR dann !!!
+    if message.content.startswith('/greet'):
+
+        # Bot-Name ist "PyBot"
+
+        # Verhindern, dass der Bot auf seine eigenen Nachrichten reagiert ...
+        # (Dies würde sonst eine Endlosschleife auslösen !)
+        if message.author == bot.user:
+            return
+
+        # Speichert den Kanal der Nachricht in "channel" ab.
+        channel = message.channel
+        # Der Bot antwortet und schreibt in den gespeicherten "channel"
+        await channel.send('Say hello!')
+
+        # Funktion, die auf eine bestimmte Antwort wartet, um dann entsprechend
+        # zu reagieren ... ( ist die Nachricht "hello" UND ist es der richtige Kanal)
+        def check(m):
+            return m.content == 'hello' and m.channel == channel
+
+        # Dies ist der wichtigste Teil ... Der "Bot" beobachtet den Kanal,
+        # ob jemand in dem beobachteten Kanal ein "hello" schreibt und reagiert,
+        # wenn beides auf TRUE geprüft wurde mit der Funktion "check". Die
+        # Nachricht wird in "msg" gespeichert bei TRUE aus Funktion "check".
+        msg = await bot.wait_for('message', check=check)
+        # "msg" enthält den author der Nachricht. Nun kann der Bot im gespeicherten
+        # Kanal "channel" dem Autor von "msg" eine Antwort senden und ihn direkt
+        # ansprechen (msg.author) ...
+        await channel.send(f'Hello {msg.author}!')
+
+    # Wichtig, damit Bot keine erneute Nachrichten-Antworten erstellt.
+    # Er wartet nun, bis die Message komplett abgearbeitet wurde.
+    # Er reagiert also nicht nochmal auf die SELBE Nachricht!
+    # Der Befehl darf nicht innerhalb der IF-Abfrage liegen !!!
+    await bot.process_commands(message)
+"""
 
 
 """
