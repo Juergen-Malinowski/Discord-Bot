@@ -11,6 +11,12 @@ import os
 # aus dotenv nun die Funktion "load_dotenv" importieren...
 from dotenv import load_dotenv
 
+# FileHandler ... fängt die logs des Discord-Bots ab und speichert
+# diese in der Datei "discordBot.log" ab, damit diese später auslesbar sind.
+# Der "handler" wird beim bot.run als Parameter mitgegeben.
+import logging
+handler = logging.FileHandler(filename="discordBot.log", mode='w', encoding="utf-8")
+
 # lädt die Variablen aus .env in die Umgebungsvariablen des Projekts
 # zur späteren Nutzung ...
 load_dotenv()  
@@ -31,8 +37,10 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"Ready !!! Ich bin {bot.user}")
 
-# Den bot starten und mit der Übergabe des token authentifizieren ...
-bot.run(token)
+# Den bot starten und mit der Übergabe des token authentifizieren.
+# log_handler aktiviert das Speichern der logs des Bots.
+# log_level definiert, wie die logs gespeichert werden sollen (DEBUG umfangreich)
+bot.run(token, log_handler=handler, log_level=logging.DEBUG)
 
 
 """
