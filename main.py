@@ -71,7 +71,6 @@ new_role = "HammerTyp"
 @bot.command()
 async def assign(ctx):
     role = discord.utils.get(ctx.guild.roles, name=new_role)
-    print(role)
     if role:
         await ctx.author.add_roles(role)
         await ctx.send(f"Deine Rolle - {role} - wurde hinzugefügt.")
