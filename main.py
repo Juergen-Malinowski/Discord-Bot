@@ -64,6 +64,31 @@ async def hallo(ctx):
 async def message(ctx, arg):
     await ctx.send(f"Deine Nachricht war {arg}")
 
+# assign
+# Mit dem Bot einem User eine ROLLE (in Discord zuvor definiert worden
+# über "Servereinstellungen/Rollen") ...
+new_role = "HammerTyp"
+@bot.command()
+async def assign(ctx):
+    role = discord.utils.get(ctx.guild.roles, name=new_role)
+    print(role)
+    if role:
+        await ctx.author.add_roles(role)
+        await ctx.send(f"Deine Rolle - {role} - wurde hinzugefügt.")
+        return
+    await ctx.send(f"Die Rolle wurde nicht gefunden !")
+
+# remove
+# Mit dem Bot eine Rolle entfernen ...
+@bot.command()
+async def remove(ctx):
+    role = discord.utils.get(ctx.guild.roles, name=new_role)
+    if role:
+        await ctx.author.remove_roles(role)
+        await ctx.send(f"Deine Rolle - {role} - wurde entfernt.")
+        return
+    await ctx.send(f"Die Rolle wurde nicht gefunden !")
+
 
 # banana
 # Bot-Event ... Bot soll auf die Nachricht "banana" reagieren ...
