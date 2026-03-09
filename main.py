@@ -39,10 +39,26 @@ intents.members = True          # Bot kann den Members des Dicord-Servers direkt
 # Mit intents=intents(command_prefix="/") weisen wir dem Bot die default()-Befehle zur Nutzung zu.
 bot = commands.Bot(command_prefix="/", intents=intents)
 
+
+# Terminal / cmd bestätigt, wenn der Bot im Dicord aktiviert wurde ...
 @bot.event
 async def on_ready():
     print(f"Ready !!! Ich bin {bot.user}")
 
+
+# /hallo
+# @bot.command() registriert die nachfolgende Funktion als Bot-Befehl (command).
+# Ein User kann den Befehl mit "/hallo" aktivieren ...
+@bot.command()
+# "ctx" steht für Context (anstatt ctx könnte auch channel geschrieben werden / ctx ist eine Kurzform bei commands)
+async def hallo(ctx):
+    # mit .mention als "Anhang" wird zur normalen Nachricht des Bots zusätzlich der Benutzer "author" angepingt,
+    # erhält also ein Info, dass er angesprochen wurde bzw. eine Antwort erhielt !!!
+    await ctx.send(f"Grüße Dich {ctx.author.mention}")
+
+
+
+# banana
 # Bot-Event ... Bot soll auf die Nachricht "banana" reagieren ...
 @bot.event
 async def on_message(message):
@@ -59,6 +75,8 @@ async def on_message(message):
     # Muss ausserhalb der IF-Anweisung stehen!
     await bot.process_commands(message)
 
+
+# BOT Start !!!
 # Den bot starten und mit der Übergabe des token authentifizieren.
 # log_handler aktiviert das Speichern der logs des Bots.
 # log_level definiert, wie die logs gespeichert werden sollen (DEBUG umfangreich)
