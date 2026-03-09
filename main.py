@@ -27,15 +27,17 @@ token = os.getenv("DISCORD_TOKEN")
 # Dem Bot die Erlaubnis / Regeln aus Dicord übergeben, die default().
 # Diese habe ich in Discord bei Erstellung des Bots festgelegt, sind also änderbar ...
 intents = discord.Intents.default()
+
 # Zwei weitere Funktionalitäten für den Bot auch HIER aktivieren ...
 # (Diese müssen bei Dicord-Developer vorher beim Bot aktiviert werden!)
 intents.message_content = True  # Bot kann nun auf Nachrichten reagieren
 intents.members = True          # Bot kann den Members des Dicord-Servers direkt antworten
 
-# Der "prefix", hier definiert als "!" leitet später in Discord einen Befehl an den Bot
-# ein, damit der Bot die Nachricht als Befehl (Funktions-Aufruf) an ihn interpretiert.
-# Mit intents=intents(Variable oben) weisen wir dem Bot die default()-Befehle zur Nutzung zu.
-bot = commands.Bot(command_prefix="!", intents=intents)
+# Der "prefix", hier definiert als "/" (modernes Präfix, heute üblich in Discord / älter "!", "?", "$") 
+# leitet später in Discord einen Befehl an den Bot ein, damit der Bot die Nachricht als Befehl (Funktions-Aufruf) 
+# an ihn interpretiert.
+# Mit intents=intents(command_prefix="/") weisen wir dem Bot die default()-Befehle zur Nutzung zu.
+bot = commands.Bot(command_prefix="/", intents=intents)
 
 @bot.event
 async def on_ready():
